@@ -2,6 +2,7 @@ package me.jubyvictor.akkaapi;
 
 import akka.NotUsed;
 import akka.actor.ActorSystem;
+import akka.dispatch.MessageDispatcher;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -12,6 +13,7 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,14 +25,20 @@ public class AkkaServer extends AllDirectives {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(AkkaServer.class);
+    private static ActorSystem system;
+    private static MessageDispatcher dispatcher;
+    private static ObjectMapper mapper;
 
 
     public static void main(String[] args) {
         // boot up server using the route as defined below
-        ActorSystem system = ActorSystem.create("routes");
+        system = ActorSystem.create("routes");
+        dispatcher = system.dispatchers().lookup("my-blocking-dispatcher");
+        mapper = new ObjectMapper();
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
+
 
         AkkaServer app = new AkkaServer();
 
@@ -59,25 +67,10 @@ public class AkkaServer extends AllDirectives {
 
 
     private Route createRoute() {
-        return
-                concat(
-                    post(() ->
-                            path("up", () -> {
-                                        long start = System.currentTimeMillis();
-                                        return entity(Jackson.unmarshaller(User.class), user -> {
-                                                    CompletionStage<User> futureUpdated = updateUser(user);
-                                                    return onSuccess(futureUpdated, updated -> {
-                                                                long end = System.currentTimeMillis();
-                                                                LOG.info("Service took {}", (end-start));
-                                                                return completeOK(updated, Jackson.marshaller());
-                                                            }
-                                                    );
-                                                }
-                                        );
-                                    }
-                            )
-                    )
-                );
-
+        return path("up", () -> post(() -> {
+            return completeWithFuture(CompletableFuture.<User>supplyAsync(() -> {
+                return entity(Jackson.unmarshaller(User.class), user-> { return updateUser(user);});
+            }, dispatcher), Jackson.<User>marshaller());
+        }));
     }
 }
