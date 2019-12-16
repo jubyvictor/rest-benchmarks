@@ -17,7 +17,6 @@ public class UserController {
 
     @PostMapping("/up")
     public CompletableFuture<String> update(@RequestBody User data){
-        LOG.info("RCVD {}", data);
         CompletableFuture<String> futureResult = service.updateUser(data);
         return  futureResult;
     }

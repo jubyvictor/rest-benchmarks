@@ -13,6 +13,7 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,20 +26,19 @@ public class AkkaServer extends AllDirectives {
 
 
     private static final Logger LOG = LoggerFactory.getLogger(AkkaServer.class);
-    private static ActorSystem system;
+
+
     private static MessageDispatcher dispatcher;
     private static ObjectMapper mapper;
 
-
     public static void main(String[] args) {
         // boot up server using the route as defined below
-        system = ActorSystem.create("routes");
+        ActorSystem system = ActorSystem.create("routes");
         dispatcher = system.dispatchers().lookup("my-blocking-dispatcher");
         mapper = new ObjectMapper();
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-
 
         AkkaServer app = new AkkaServer();
 
@@ -60,17 +60,27 @@ public class AkkaServer extends AllDirectives {
     }
 
 
-    private CompletionStage<User> updateUser(final User user) {
+    private String updateUser(final User user) {
         user.setUpdatedAt(System.currentTimeMillis());
-        return CompletableFuture.completedFuture(user);
+        try {
+            Thread.sleep(25);
+            return mapper.writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
     private Route createRoute() {
-        return path("up", () -> post(() -> {
-            return completeWithFuture(CompletableFuture.<User>supplyAsync(() -> {
-                return entity(Jackson.unmarshaller(User.class), user-> { return updateUser(user);});
-            }, dispatcher), Jackson.<User>marshaller());
-        }));
+        return concat(
+                get(() -> complete("Hello from Akka")),
+                post(() -> path("up", () -> entity(Jackson.unmarshaller(User.class), usr -> completeWithFuture(CompletableFuture.supplyAsync(() -> {
+                            String updateUser = updateUser(usr);
+                            return HttpResponse.create().withEntity(updateUser);
+                        }, dispatcher))
+                )))
+        );
     }
 }

@@ -20,7 +20,7 @@ public class Main {
 
 
     private static final String ROOT = "/";
-    private static final String UPDATE = "/update";
+    private static final String UPDATE = "/up";
 
     private static final int PORT = 8080;
 

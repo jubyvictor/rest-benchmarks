@@ -20,9 +20,9 @@ public class JsonProcessingHandler implements Handler<RoutingContext> {
         long start = System.currentTimeMillis();
         String json;
         try {
+            Thread.sleep(25);
             JsonObject payload = routingContext.getBodyAsJson();
             User user = Json.decodeValue(payload.toBuffer(), User.class);
-            LOG.info(user.toString());
             user.setUpdatedAt(System.currentTimeMillis());
             json = mapper.writeValueAsString(user);
         } catch (Exception e) {

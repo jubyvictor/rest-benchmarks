@@ -23,7 +23,7 @@ public class JsonProcessingService {
         long start = System.currentTimeMillis();
         String json;
         try {
-            LOG.info(user.toString());
+            Thread.sleep(40);
             user.setUpdatedAt(System.currentTimeMillis());
             json = mapper.writeValueAsString(user);
         } catch (Exception e) {
