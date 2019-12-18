@@ -14,7 +14,7 @@
     </Appenders>
     <Loggers>
         <!-- avoid duplicated logs with additivity=false -->
-        <Logger name="com.intuit" level="debug" additivity="false">
+        <Logger name="me.jubyvictor" level="debug" additivity="false">
             <AppenderRef ref="RollingFileLogger"/>
         </Logger>
         <Root level="error">
