@@ -7,7 +7,7 @@ Each of the rest endpoint
 Accepts a json shown below, sleeps for 25 ms to mimic fairly expensive operations, unmarshals, adds a timestamp, marshals back to string and returns the response.
 {"id":"123AEF", "name": "Juby"}
 
-Machines tweaks applied
+Machine tweaks applied
 
 Client : OSX Mojave
 ```
