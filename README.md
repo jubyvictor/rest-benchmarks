@@ -1,5 +1,4 @@
 # rest-benchmarks
-Benchmarks between Springboot Async Vertx &amp; GoLang Rest APIs
 
 Comparison between various interesting JVM frameworks & GoLang
 
@@ -51,5 +50,10 @@ Java commands & flags used
 java -jar -server -Xms1024m -Xmx8192m -Djava.rmi.server.hostname=192.168.1.141 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.local.only=false  -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.net.preferIPv4Stack=true app.jar
 
 ```
+
+Results: Refer to AB_BenchMarks_result.txt
+Vertx #1 @ 700+ tps  
+Akka #2 @ 500+ tps
+Springboot #3 @280+ tps
 
 
