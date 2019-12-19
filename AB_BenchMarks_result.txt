@@ -1,0 +1,254 @@
+
+java -server -Xms2048m -Xmx8192m -Djava.net.preferIPv4Stack=true -jar target/vertx-rest-api-jar-with-dependencies.jar
+
+Vertx-Ebus 
+==========
+
+benchmarks git:(master) ✗ ab -k -p payload.json -n 100000 -c 200 -T application/json -m POST http://127.0.0.1:8080/up
+This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 10000 requests
+Completed 20000 requests
+Completed 30000 requests
+Completed 40000 requests
+Completed 50000 requests
+Completed 60000 requests
+Completed 70000 requests
+Completed 80000 requests
+Completed 90000 requests
+Completed 100000 requests
+Finished 100000 requests
+
+
+Server Software:
+Server Hostname:        127.0.0.1
+Server Port:            8080
+
+Document Path:          /up
+Document Length:        39 bytes
+
+Concurrency Level:      200
+Time taken for tests:   346.978 seconds
+Complete requests:      100000
+Failed requests:        0
+Keep-Alive requests:    100000
+Total transferred:      10200000 bytes
+Total body sent:        21500000
+HTML transferred:       3900000 bytes
+Requests per second:    288.20 [#/sec] (mean)
+Time per request:       693.957 [ms] (mean)
+Time per request:       3.470 [ms] (mean, across all concurrent requests)
+Transfer rate:          28.71 [Kbytes/sec] received
+                        60.51 kb/s sent
+                        89.22 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       8
+Processing:    28  693  70.1    704     865
+Waiting:       26  693  70.1    704     865
+Total:         31  693  70.0    704     865
+
+Percentage of the requests served within a certain time (ms)
+  50%    704
+  66%    725
+  75%    741
+  80%    749
+  90%    769
+  95%    789
+  98%    811
+  99%    822
+ 100%    865 (longest request)
+ 
+ 
+ Vertx-BlockingHandler (ordered=false)
+ =====================
+ 
+ ➜  benchmarks git:(master) ✗ ab -k -p payload.json -n 100000 -c 200 -T application/json -m POST http://127.0.0.1:8080/up
+ This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+ Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+ Licensed to The Apache Software Foundation, http://www.apache.org/
+
+ Benchmarking 127.0.0.1 (be patient)
+ Completed 10000 requests
+ Completed 20000 requests
+ Completed 30000 requests
+ Completed 40000 requests
+ Completed 50000 requests
+ Completed 60000 requests
+ Completed 70000 requests
+ Completed 80000 requests
+ Completed 90000 requests
+ Completed 100000 requests
+ Finished 100000 requests
+
+
+ Server Software:
+ Server Hostname:        127.0.0.1
+ Server Port:            8080
+
+ Document Path:          /up
+ Document Length:        39 bytes
+
+ Concurrency Level:      200
+ Time taken for tests:   141.393 seconds
+ Complete requests:      100000
+ Failed requests:        0
+ Keep-Alive requests:    100000
+ Total transferred:      10200000 bytes
+ Total body sent:        21500000
+ HTML transferred:       3900000 bytes
+ Requests per second:    707.25 [#/sec] (mean)
+ Time per request:       282.786 [ms] (mean)
+ Time per request:       1.414 [ms] (mean, across all concurrent requests)
+ Transfer rate:          70.45 [Kbytes/sec] received
+                         148.49 kb/s sent
+                         218.94 kb/s total
+
+ Connection Times (ms)
+               min  mean[+/-sd] median   max
+ Connect:        0    0   0.8      0     107
+ Processing:    39  282   9.6    283     349
+ Waiting:       27  282   9.6    283     349
+ Total:         39  282   9.4    283     377
+
+ Percentage of the requests served within a certain time (ms)
+   50%    283
+   66%    285
+   75%    287
+   80%    288
+   90%    290
+   95%    293
+   98%    297
+   99%    303
+  100%    377 (longest request)
+  
+  
+  
+  SpinrgBoot-Async
+  ================
+  
+  ➜  benchmarks git:(master) ✗ ab -k -p payload.json -n 100000 -c 200 -T application/json -m POST http://127.0.0.1:8080/up
+  This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+  Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+  Licensed to The Apache Software Foundation, http://www.apache.org/
+
+  Benchmarking 127.0.0.1 (be patient)
+  Completed 10000 requests
+  Completed 20000 requests
+  Completed 30000 requests
+  Completed 40000 requests
+  Completed 50000 requests
+  Completed 60000 requests
+  Completed 70000 requests
+  Completed 80000 requests
+  Completed 90000 requests
+  Completed 100000 requests
+  Finished 100000 requests
+
+
+  Server Software:
+  Server Hostname:        127.0.0.1
+  Server Port:            8080
+
+  Document Path:          /up
+  Document Length:        39 bytes
+
+  Concurrency Level:      200
+  Time taken for tests:   345.408 seconds
+  Complete requests:      100000
+  Failed requests:        0
+  Keep-Alive requests:    99011
+  Total transferred:      17695055 bytes
+  Total body sent:        21500000
+  HTML transferred:       3900000 bytes
+  Requests per second:    289.51 [#/sec] (mean)
+  Time per request:       690.817 [ms] (mean)
+  Time per request:       3.454 [ms] (mean, across all concurrent requests)
+  Transfer rate:          50.03 [Kbytes/sec] received
+                          60.79 kb/s sent
+                          110.81 kb/s total
+
+  Connection Times (ms)
+                min  mean[+/-sd] median   max
+  Connect:        0    0   0.3      0      12
+  Processing:    42  690  18.8    691     722
+  Waiting:       30  690  18.8    691     722
+  Total:         42  690  18.6    691     722
+
+  Percentage of the requests served within a certain time (ms)
+    50%    691
+    66%    694
+    75%    697
+    80%    698
+    90%    701
+    95%    705
+    98%    708
+    99%    711
+   100%    722 (longest request)
+   
+   
+   Akka-http
+   ====
+   ➜  benchmarks git:(master) ✗ ab -k -p payload.json -n 100000 -c 200 -T application/json -m POST http://127.0.0.1:8080/up
+   This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+   Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+   Licensed to The Apache Software Foundation, http://www.apache.org/
+
+   Benchmarking 127.0.0.1 (be patient)
+   Completed 10000 requests
+   Completed 20000 requests
+   Completed 30000 requests
+   Completed 40000 requests
+   Completed 50000 requests
+   Completed 60000 requests
+   Completed 70000 requests
+   Completed 80000 requests
+   Completed 90000 requests
+   Completed 100000 requests
+   Finished 100000 requests
+
+
+   Server Software:        akka-http/10.1.11
+   Server Hostname:        127.0.0.1
+   Server Port:            8080
+
+   Document Path:          /up
+   Document Length:        41 bytes
+
+   Concurrency Level:      200
+   Time taken for tests:   173.872 seconds
+   Complete requests:      100000
+   Failed requests:        0
+   Keep-Alive requests:    100000
+   Total transferred:      20900000 bytes
+   Total body sent:        18800000
+   HTML transferred:       4100000 bytes
+   Requests per second:    575.14 [#/sec] (mean)
+   Time per request:       347.744 [ms] (mean)
+   Time per request:       1.739 [ms] (mean, across all concurrent requests)
+   Transfer rate:          117.39 [Kbytes/sec] received
+                           105.59 kb/s sent
+                           222.98 kb/s total
+
+   Connection Times (ms)
+                 min  mean[+/-sd] median   max
+   Connect:        0    0   3.6      0     119
+   Processing:    30  347  17.0    346     433
+   Waiting:       30  347  17.0    346     433
+   Total:         30  347  17.0    346     552
+
+   Percentage of the requests served within a certain time (ms)
+     50%    346
+     66%    356
+     75%    360
+     80%    362
+     90%    366
+     95%    369
+     98%    372
+     99%    373
+    100%    552 (longest request)
+   

@@ -41,20 +41,21 @@ public class Main {
 
     private void start() {
 
+        /*
         DeploymentOptions options = new DeploymentOptions()
                 .setWorker(true)
-                //.setInstances(Runtime.getRuntime().availableProcessors())
-                .setInstances(4)
                 .setWorkerPoolName("the-specific-pool")
-                .setWorkerPoolSize(4);;
+                .setWorkerPoolSize(Runtime.getRuntime().availableProcessors());
 
-        vertx.deployVerticle(()-> new JsonProcessingVerticle(), options, res->{
+        for(int i =0 ; i< Runtime.getRuntime().availableProcessors(); i++) {
+            vertx.deployVerticle("me.jubyvictor.restapi.JsonProcessingVerticle", options, res -> {
                 if (res.succeeded()) {
                     System.out.println("Deployment id is: " + res.result());
                 } else {
                     System.out.println("Deployment failed!");
                 }
-        });
+            });
+        }*/
 
 
         //root
@@ -64,13 +65,13 @@ public class Main {
         //update
         router.get(UPDATE).produces("application/json").method(HttpMethod.POST)
                 .handler(BodyHandler.create())
-                .handler((routingContext)->{
+                /*.handler((routingContext)->{
                     LOG.info("Got request");
                     eventBus.request("tx_json",  routingContext.getBodyAsJson(), resp ->{
                         routingContext.response().setStatusCode(200).end((String)resp.result().body());
                     });
-                });
-                //.blockingHandler(jsonProcessingHandler);
+                });*/
+                .blockingHandler(jsonProcessingHandler, false);
 
 
         server.requestHandler(router).listen(PORT, httpServerAsyncResult -> {

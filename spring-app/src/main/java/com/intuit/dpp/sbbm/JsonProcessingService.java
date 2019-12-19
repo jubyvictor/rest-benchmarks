@@ -23,14 +23,14 @@ public class JsonProcessingService {
         long start = System.currentTimeMillis();
         String json;
         try {
-            Thread.sleep(40);
+            Thread.sleep(25);
             user.setUpdatedAt(System.currentTimeMillis());
             json = mapper.writeValueAsString(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         long end = System.currentTimeMillis();
-        LOG.info("Service took {}", (end-start));
+        LOG.info("Px took {}", (end-start));
         return CompletableFuture.completedFuture(json);
     }
 }

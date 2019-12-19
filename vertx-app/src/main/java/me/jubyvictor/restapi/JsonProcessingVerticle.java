@@ -24,12 +24,18 @@ public class JsonProcessingVerticle extends AbstractVerticle {
     public void start() throws Exception {
         super.start();
         this.eventBus.consumer("tx_json", message -> {
-            LOG.info("Got message");
+            long start = System.currentTimeMillis();
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             JsonObject payload = (JsonObject)message.body();
             User user = Json.decodeValue(payload.toBuffer(), User.class);
             user.setUpdatedAt(System.currentTimeMillis());
             message.reply(Json.encode(user));
-            LOG.info("Sent response");
+            long end = System.currentTimeMillis();
+            LOG.info("Px took {}", (end-start));
         });
     }
 

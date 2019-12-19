@@ -30,7 +30,7 @@ public class JsonProcessingHandler implements Handler<RoutingContext> {
         }
         routingContext.response().setStatusCode(200).end(json);
         long end = System.currentTimeMillis();
-        LOG.info("Service took {}", (end-start));
+        LOG.info("Px took {}", (end-start));
 
     }
 }
