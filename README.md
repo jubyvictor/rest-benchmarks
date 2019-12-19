@@ -11,6 +11,7 @@ Accepts a json shown below, sleeps for 25 ms to mimic fairly expensive operation
 Machines tweaks applied
 
 Client : OSX Mojave
+```
 ulimit -a
 -t: cpu time (seconds)              unlimited
 -f: file size (blocks)              unlimited
@@ -21,9 +22,9 @@ ulimit -a
 -l: locked-in-memory size (kbytes)  unlimited
 -u: processes                       4096
 -n: file descriptors                200000
-
+```
 Server : Linux
-
+```
 Linux ml-engine 5.0.0-32-generic #34~18.04.2-Ubuntu SMP Thu Oct 10 10:36:02 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
 
 ulimit -a
@@ -44,7 +45,7 @@ max user processes              (-u) 63794
 virtual memory          (kbytes, -v) unlimited
 file locks                      (-x) unlimited
 
-
+```
 Java commands & flags used
 ``` 
 java -jar -server -Xms1024m -Xmx8192m -Djava.rmi.server.hostname=192.168.1.141 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.local.only=false  -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.net.preferIPv4Stack=true app.jar
