@@ -16,7 +16,7 @@
         <akka.version>2.6.1</akka.version>
         <akka-http.version>10.1.11</akka-http.version>
         <akka-streams.version>2.5.26</akka-streams.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
         <log4j.version>2.12.1</log4j.version>
     </properties>
 
